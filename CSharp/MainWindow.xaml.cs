@@ -164,12 +164,7 @@ namespace WpfDocumentViewerDemo
         /// <summary>
         /// List of initialized annotations.
         /// </summary>
-        List<AnnotationData> _initializedAnnotations = new List<AnnotationData>();
-
-        /// <summary>
-        /// Focused annotation.
-        /// </summary>
-        AnnotationData _focusedAnnotationData = null;
+        List<AnnotationData> _initializedAnnotations = new List<AnnotationData>();   
 
         /// <summary>
         /// A value indicating whether transforming of annotation is started.
@@ -2832,109 +2827,7 @@ namespace WpfDocumentViewerDemo
                 imageInfoStatusLabel.Text = "";
         }
 
-        /// <summary>
-        /// Focused annotation is changed in annotation viewer.
-        /// </summary>
-        private void annotationViewer_FocusedAnnotationViewChanged(
-            object sender,
-            WpfAnnotationViewChangedEventArgs e)
-        {
-            if (e.OldValue != null)
-            {
-                AnnotationData oldValue = e.OldValue.Data;
-                while (oldValue is CompositeAnnotationData)
-                {
-                    CompositeAnnotationData compositeData = (CompositeAnnotationData)oldValue;
-
-                    if (compositeData is StickyNoteAnnotationData)
-                    {
-                        compositeData.PropertyChanged -= new EventHandler<ObjectPropertyChangedEventArgs>(compositeData_PropertyChanged);
-                    }
-
-                    foreach (AnnotationData data in compositeData)
-                    {
-                        oldValue = data;
-                        break;
-                    }
-                }
-                oldValue.PropertyChanged -= new EventHandler<ObjectPropertyChangedEventArgs>(FocusedAnnotationData_PropertyChanged);
-            }
-            if (e.NewValue != null)
-            {
-                AnnotationData newValue = e.NewValue.Data;
-                while (newValue is CompositeAnnotationData)
-                {
-                    CompositeAnnotationData compositeData = (CompositeAnnotationData)newValue;
-
-                    if (compositeData is StickyNoteAnnotationData)
-                    {
-                        compositeData.PropertyChanged += new EventHandler<ObjectPropertyChangedEventArgs>(compositeData_PropertyChanged);
-                    }
-
-                    foreach (AnnotationData data in compositeData)
-                    {
-                        newValue = data;
-                        break;
-                    }
-                }
-                newValue.PropertyChanged += new EventHandler<ObjectPropertyChangedEventArgs>(FocusedAnnotationData_PropertyChanged);
-                // store last focused annotation
-                _focusedAnnotationData = newValue;
-            }
-        }
-
-        /// <summary>
-        /// Focused annotation property is changed.
-        /// </summary>
-        private void FocusedAnnotationData_PropertyChanged(
-            object sender,
-            ObjectPropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Location" && annotationViewer1.SelectedAnnotations.Count > 1)
-            {
-                WpfAnnotationView focusedView = annotationViewer1.AnnotationVisualTool.FocusedAnnotationView;
-                if (focusedView != null && focusedView.InteractionController != null)
-                {
-                    WpfInteractionArea focusedArea = focusedView.InteractionController.FocusedInteractionArea;
-                    if (focusedArea != null && focusedArea.InteractionName == "Move")
-                    {
-                        System.Drawing.PointF oldValue = (System.Drawing.PointF)e.OldValue;
-                        System.Drawing.PointF newValue = (System.Drawing.PointF)e.NewValue;
-                        System.Drawing.PointF locationDelta = new System.Drawing.PointF(newValue.X - oldValue.X, newValue.Y - oldValue.Y);
-                        AnnotationData[] annotations = new AnnotationData[annotationViewer1.SelectedAnnotations.Count];
-                        for (int i = 0; i < annotationViewer1.SelectedAnnotations.Count; i++)
-                            annotations[i] = annotationViewer1.SelectedAnnotations[i].Data;
-                        AnnotationDemosTools.ChangeAnnotationsLocation(locationDelta, annotations, (AnnotationData)sender);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Composite annotation property is changed.
-        /// </summary>
-        private void compositeData_PropertyChanged(object sender, ObjectPropertyChangedEventArgs e)
-        {
-            StickyNoteAnnotationData stickyNote = sender as StickyNoteAnnotationData;
-            if (stickyNote != null)
-            {
-                if (e.PropertyName == "CollapsedType" || e.PropertyName == "IsCollapsed")
-                {
-                    if (_focusedAnnotationData != null)
-                    {
-                        _focusedAnnotationData.PropertyChanged -= new EventHandler<ObjectPropertyChangedEventArgs>(FocusedAnnotationData_PropertyChanged);
-                    }
-
-                    foreach (AnnotationData data in stickyNote)
-                    {
-                        _focusedAnnotationData = data;
-                        _focusedAnnotationData.PropertyChanged += new EventHandler<ObjectPropertyChangedEventArgs>(FocusedAnnotationData_PropertyChanged);
-                        break;
-                    }
-                }
-            }
-        }
-
+       
         /// <summary>
         /// Begins initialization of the specified annotation.
         /// </summary>

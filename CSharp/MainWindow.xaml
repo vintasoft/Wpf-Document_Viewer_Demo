@@ -428,14 +428,14 @@
                                           AnnotationInteractionModeChanged="annotationViewer_AnnotationInteractionModeChanged"
                                           AnnotationTransformingStarted="annotationViewer_AnnotationTransformingStarted"
                                           AnnotationTransformingFinished="annotationViewer_AnnotationTransformingFinished"
-                                          FocusedAnnotationViewChanged="annotationViewer_FocusedAnnotationViewChanged"
                                           InputGestureCopy="{x:Null}"
                                           InputGestureCut="{x:Null}"
                                           InputGestureInsert="{x:Null}"
                                           InputGestureDelete="{x:Null}"
                                           PreviewKeyDown="annotationViewer_PreviewKeyDown"
                                           RendererCacheSize="256"
-                                          IsKeyboardNavigationEnabled="True"        
+                                          IsKeyboardNavigationEnabled="True"    
+                                          AllowMoveSelectedAnnotations="True"
                                           DisplayMode="SingleContinuousColumn">
                 </vsai:WpfAnnotationViewer>
                 <GridSplitter Visibility="Collapsed" Name="annotationEventsLogGridSplitter" Grid.Row="0" Background="LightBlue" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
