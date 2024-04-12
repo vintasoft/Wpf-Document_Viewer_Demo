@@ -347,8 +347,8 @@
                     </MenuItem>
                     <MenuItem Header="Build Annotations Continuously" Name="buildAnnotationsContinuouslyMenuItem" Click="buildAnnotationsContinuouslyMenuItem_Click" />
                     <Separator />
-                    <MenuItem Header="Bring to back" Name="bringToBackMenuItem" Click="bringToBackMenuItem_Click" />
-                    <MenuItem Header="Bring to front" Name="bringToFrontMenuItem" Click="bringToFrontMenuItem_Click" />
+                    <MenuItem Header="Bring to back" Name="bringToBackMenuItem1" Click="bringToBackMenuItem_Click" />
+                    <MenuItem Header="Bring to front" Name="bringToFrontMenuItem1" Click="bringToFrontMenuItem_Click" />
                     <Separator />
                     <MenuItem Header="Multi Select" Name="multiSelectMenuItem" IsCheckable="True" IsChecked="True" Click="multiSelectMenuItem_Click" />
                     <Separator />
@@ -437,6 +437,16 @@
                                           IsKeyboardNavigationEnabled="True"    
                                           AllowMoveSelectedAnnotations="True"
                                           DisplayMode="SingleContinuousColumn">
+                    <vsai:WpfAnnotationViewer.AnnotationAuthorContextMenu>
+                        <ContextMenu Name="annotationMenu" Opened="annotationMenu_Opened">
+                            <MenuItem Name="copyAnnotationMenuItem" Header="Copy annotation" Click="copyMenuItem_Click" />
+                            <MenuItem Name="pasteAnnotationMenuItem" Header="Paste annotation" Click="pasteAnnotationInMousePositionMenuItem_Click" />
+                            <MenuItem Name="deleteAnnotationMenuItem" Header="Delete annotation" Click="deleteMenuItem_Click" />
+                            <Separator />
+                            <MenuItem Name="bringToBackMenuItem" Header="Bring to back" Click="bringToBackMenuItem_Click"/>
+                            <MenuItem Name="bringToFrontMenuItem" Header="Bring to front" Click="bringToFrontMenuItem_Click"/>
+                        </ContextMenu>
+                    </vsai:WpfAnnotationViewer.AnnotationAuthorContextMenu>
                 </vsai:WpfAnnotationViewer>
                 <GridSplitter Visibility="Collapsed" Name="annotationEventsLogGridSplitter" Grid.Row="0" Background="LightBlue" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
             </Grid>

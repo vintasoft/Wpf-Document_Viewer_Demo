@@ -212,6 +212,11 @@ namespace WpfDocumentViewerDemo
         WpfCommentVisualTool _commentVisualTool;
 
         /// <summary>
+        /// The context menu position.
+        /// </summary>
+        Point _contextMenuPosition;
+
+        /// <summary>
         /// Manages the layout settings of DOCX document image collections.
         /// </summary>
         ImageCollectionDocxLayoutSettingsManager _imageCollectionDocxLayoutSettingsManager;
@@ -835,8 +840,8 @@ namespace WpfDocumentViewerDemo
             addAnnotationMenuItem.IsEnabled = !isFileEmpty && isInteractionModeAuthor;
             buildAnnotationsContinuouslyMenuItem.IsEnabled = !isFileEmpty;
             //
-            bringToBackMenuItem.IsEnabled = !isFileEmpty && isInteractionModeAuthor && !isAnnotationBuilding && isAnnotationSelected;
-            bringToFrontMenuItem.IsEnabled = !isFileEmpty && isInteractionModeAuthor && !isAnnotationBuilding && isAnnotationSelected;
+            bringToBackMenuItem1.IsEnabled = !isFileEmpty && isInteractionModeAuthor && !isAnnotationBuilding && isAnnotationSelected;
+            bringToFrontMenuItem1.IsEnabled = !isFileEmpty && isInteractionModeAuthor && !isAnnotationBuilding && isAnnotationSelected;
             //
             multiSelectMenuItem.IsEnabled = !isFileEmpty;
             //
@@ -966,7 +971,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of DocxLayoutSettingsMenuItem object.
+        /// Handles the Click event of docxLayoutSettingsMenuItem object.
         /// </summary>
         private void docxLayoutSettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -974,7 +979,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of XlsxLayoutSettingsMenuItem object.
+        /// Handles the Click event of xlsxLayoutSettingsMenuItem object.
         /// </summary>
         private void xlsxLayoutSettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -2087,6 +2092,25 @@ namespace WpfDocumentViewerDemo
             UpdateUI();
         }
 
+        /// <summary>
+        /// Pastes annotation in mouse position.
+        /// </summary>
+        private void pasteAnnotationInMousePositionMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // get mouse position on image in DIP
+            Point mousePositionOnImageInDip = annotationViewer1.PointFromControlToDip(_contextMenuPosition);
+
+            annotationViewer1.PasteAnnotationsFromClipboard(mousePositionOnImageInDip);
+        }
+
+        /// <summary>
+        /// The annotation context menu is opened.
+        /// </summary>
+        private void annotationMenu_Opened(object sender, RoutedEventArgs e)
+        {
+            _contextMenuPosition = Mouse.GetPosition(annotationViewer1);
+        }
+
         #endregion
 
 
@@ -2544,7 +2568,7 @@ namespace WpfDocumentViewerDemo
         /// <summary>
         /// Selected annotation is changed using annotation's combobox.
         /// </summary>
-        private void annotationComboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
+        private void annotationComboBox_SelectedIndexChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (annotationViewer1.FocusedIndex != -1 && annotationComboBox.SelectedIndex != -1)
             {
@@ -3460,7 +3484,7 @@ namespace WpfDocumentViewerDemo
         #region Hot keys
 
         /// <summary>
-        /// Handles the CanExecute event of OpenCommandBinding object.
+        /// Handles the CanExecute event of openCommandBinding object.
         /// </summary>
         private void openCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3468,7 +3492,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of AddCommandBinding object.
+        /// Handles the CanExecute event of addCommandBinding object.
         /// </summary>
         private void addCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3476,7 +3500,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of SaveAsCommandBinding object.
+        /// Handles the CanExecute event of saveAsCommandBinding object.
         /// </summary>
         private void saveAsCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3484,7 +3508,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of CloseCommandBinding object.
+        /// Handles the CanExecute event of closeCommandBinding object.
         /// </summary>
         private void closeCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3492,7 +3516,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of PrintCommandBinding object.
+        /// Handles the CanExecute event of printCommandBinding object.
         /// </summary>
         private void printCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3500,7 +3524,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of ExitCommandBinding object.
+        /// Handles the CanExecute event of exitCommandBinding object.
         /// </summary>
         private void exitCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3508,7 +3532,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of FindTextCommandBinding object.
+        /// Handles the CanExecute event of findTextCommandBinding object.
         /// </summary>
         private void findTextCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3516,7 +3540,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of CutCommandBinding object.
+        /// Handles the CanExecute event of cutCommandBinding object.
         /// </summary>
         private void cutCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3524,7 +3548,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of CopyCommandBinding object.
+        /// Handles the CanExecute event of copyCommandBinding object.
         /// </summary>
         private void copyCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3532,7 +3556,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of PasteCommandBinding object.
+        /// Handles the CanExecute event of pasteCommandBinding object.
         /// </summary>
         private void pasteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3540,7 +3564,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of DeleteCommandBinding object.
+        /// Handles the CanExecute event of deleteCommandBinding object.
         /// </summary>
         private void deleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3549,7 +3573,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of DeleteAllCommandBinding object.
+        /// Handles the CanExecute event of deleteAllCommandBinding object.
         /// </summary>
         private void deleteAllCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3557,7 +3581,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of SelectAllCommandBinding object.
+        /// Handles the CanExecute event of selectAllCommandBinding object.
         /// </summary>
         private void selectAllCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3565,7 +3589,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of DeselectAllCommandBinding object.
+        /// Handles the CanExecute event of deselectAllCommandBinding object.
         /// </summary>
         private void deselectAllCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3573,7 +3597,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of GroupCommandBinding object.
+        /// Handles the CanExecute event of groupCommandBinding object.
         /// </summary>
         private void groupCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3581,7 +3605,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of GroupAllCommandBinding object.
+        /// Handles the CanExecute event of groupAllCommandBinding object.
         /// </summary>
         private void groupAllCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3589,7 +3613,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of RotateClockwiseCommandBinding object.
+        /// Handles the CanExecute event of rotateClockwiseCommandBinding object.
         /// </summary>
         private void rotateClockwiseCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3597,7 +3621,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of RotateCounterclockwiseCommandBinding object.
+        /// Handles the CanExecute event of rotateCounterclockwiseCommandBinding object.
         /// </summary>
         private void rotateCounterclockwiseCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3605,7 +3629,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of UndoCommandBinding object.
+        /// Handles the CanExecute event of undoCommandBinding object.
         /// </summary>
         private void undoCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3613,7 +3637,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of RedoCommandBinding object.
+        /// Handles the CanExecute event of redoCommandBinding object.
         /// </summary>
         private void redoCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
