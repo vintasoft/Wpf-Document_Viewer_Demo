@@ -1614,16 +1614,8 @@ namespace WpfDocumentViewerDemo
         /// </summary>
         private void RotateViewClockwise()
         {
-            if (annotationViewer1.ImageRotationAngle != 270)
-            {
-                annotationViewer1.ImageRotationAngle += 90;
-                thumbnailViewer1.ImageRotationAngle += 90;
-            }
-            else
-            {
-                annotationViewer1.ImageRotationAngle = 0;
-                thumbnailViewer1.ImageRotationAngle = 0;
-            }
+            annotationViewer1.RotateViewClockwise();
+            thumbnailViewer1.RotateViewClockwise();
         }
 
         /// <summary>
@@ -1631,16 +1623,8 @@ namespace WpfDocumentViewerDemo
         /// </summary>
         private void RotateViewCounterClockwise()
         {
-            if (annotationViewer1.ImageRotationAngle != 0)
-            {
-                annotationViewer1.ImageRotationAngle -= 90;
-                thumbnailViewer1.ImageRotationAngle -= 90;
-            }
-            else
-            {
-                annotationViewer1.ImageRotationAngle = 270;
-                thumbnailViewer1.ImageRotationAngle = 270;
-            }
+            annotationViewer1.RotateViewCounterClockwise();
+            thumbnailViewer1.RotateViewCounterClockwise();
         }
 
 
@@ -2093,6 +2077,52 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
+        /// Handles the Click event of rotateViewClockwise object.
+        /// </summary>
+        private void rotateViewClockwise_Click(object sender, RoutedEventArgs e)
+        {
+            if (thumbnailViewer1.FocusedIndex == -1)
+                return;
+
+            VintasoftImage image = thumbnailViewer1.Images[thumbnailViewer1.FocusedIndex];
+
+            int rotationAngle = thumbnailViewer1.GetCustomViewRotationAngle(image);
+            if (rotationAngle == -1)
+                rotationAngle = 0;
+
+            if (rotationAngle != 270)
+                rotationAngle += 90;
+            else
+                rotationAngle = 0;
+
+            thumbnailViewer1.SetCustomViewRotationAngle(image, rotationAngle);
+            annotationViewer1.SetCustomViewRotationAngle(image, rotationAngle);
+        }
+
+        /// <summary>
+        /// Handles the Click event of rotateViewCounterclockwise object.
+        /// </summary>
+        private void rotateViewCounterclockwise_Click(object sender, RoutedEventArgs e)
+        {
+            if (thumbnailViewer1.FocusedIndex == -1)
+                return;
+
+            VintasoftImage image = thumbnailViewer1.Images[thumbnailViewer1.FocusedIndex];
+
+            int rotationAngle = thumbnailViewer1.GetCustomViewRotationAngle(image);
+            if (rotationAngle == -1)
+                rotationAngle = 0;
+
+            if (rotationAngle != 0)
+                rotationAngle -= 90;
+            else
+                rotationAngle = 270;
+
+            thumbnailViewer1.SetCustomViewRotationAngle(image, rotationAngle);
+            annotationViewer1.SetCustomViewRotationAngle(image, rotationAngle);
+        }
+
+        /// <summary>
         /// Pastes annotation in mouse position.
         /// </summary>
         private void pasteAnnotationInMousePositionMenuItem_Click(object sender, RoutedEventArgs e)
@@ -2467,10 +2497,21 @@ namespace WpfDocumentViewerDemo
                 deleteImageItem.Click += new RoutedEventHandler(deleteImageMenuItem_Click);
                 thumbnailContextMenu.Items.Add(deleteImageItem);
 
+                thumbnailContextMenu.Items.Add(new Separator());
+
+                MenuItem rotateViewClockwise = new MenuItem();
+                rotateViewClockwise.Header = "Rotate view clockwise";
+                rotateViewClockwise.Click += rotateViewClockwise_Click;
+                thumbnailContextMenu.Items.Add(rotateViewClockwise);
+
+                MenuItem rotateViewCounterclockwise = new MenuItem();
+                rotateViewCounterclockwise.Header = "Rotate view counterclockwise";
+                rotateViewCounterclockwise.Click += rotateViewCounterclockwise_Click;
+                thumbnailContextMenu.Items.Add(rotateViewCounterclockwise);
+
                 thumbnail.ContextMenu = thumbnailContextMenu;
             }
         }
-
 
         /// <summary>
         /// Sets the ToolTip of hovered thumbnail.
