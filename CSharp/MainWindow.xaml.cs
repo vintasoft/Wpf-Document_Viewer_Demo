@@ -3363,7 +3363,7 @@ namespace WpfDocumentViewerDemo
         /// </summary>
         private void SavingProgress(object sender, ProgressEventArgs e)
         {
-            Dispatcher.Invoke(new UpdateSavingProgressDelegate(UpdateSavingProgress), e.Progress);
+            Dispatcher.BeginInvoke(new UpdateSavingProgressDelegate(UpdateSavingProgress), e.Progress);
         }
 
         /// <summary>
