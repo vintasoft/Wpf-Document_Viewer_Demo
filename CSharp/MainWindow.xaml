@@ -308,6 +308,8 @@
                         <MenuItem Header="None" Name="annotationInteractionModeNoneMenuItem" Click="annotationInteractionModeNoneMenuItem_Click"/>
                         <MenuItem Header="View" Name="annotationInteractionModeViewMenuItem" Click="annotationInteractionModeViewMenuItem_Click" />
                         <MenuItem Header="Author" Name="annotationInteractionModeAuthorMenuItem" IsChecked="True" Click="annotationInteractionModeAuthorMenuItem_Click" />
+                        <MenuItem Header="Annotation eraser" Name="annotationInteractionModeAnnotationEraserMenuItem" Click="annotationInteractionModeAnnotationEraserMenuItem_Click" />
+                        <MenuItem Header="Pencil eraser" Name="annotationInteractionModePencilEraserMenuItem" Click="annotationInteractionModePencilEraserMenuItem_Click" />
                     </MenuItem>
                     <MenuItem Header="Transformation Mode" Name="transformationModeMenuItem" >
                         <MenuItem Header="Rectangular" Name="transformationModeRectangularMenuItem" Click="transformationModeRectangularMenuItem_Click"/>

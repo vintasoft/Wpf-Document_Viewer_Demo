@@ -1759,7 +1759,7 @@ namespace WpfDocumentViewerDemo
         #region Annotation interaction mode
 
         /// <summary>
-        /// Changes the annotation interaction mode to None.
+        /// Changes the annotation interaction mode to the "None" mode.
         /// </summary>
         private void annotationInteractionModeNoneMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1767,7 +1767,7 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Changes the annotation interaction mode to View.
+        /// Changes the annotation interaction mode to the "View" mode.
         /// </summary>
         private void annotationInteractionModeViewMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1775,11 +1775,27 @@ namespace WpfDocumentViewerDemo
         }
 
         /// <summary>
-        /// Changes the annotation interaction mode to Author.
+        /// Changes the annotation interaction mode to the "Author" mode.
         /// </summary>
         private void annotationInteractionModeAuthorMenuItem_Click(object sender, RoutedEventArgs e)
         {
             annotationViewer1.AnnotationInteractionMode = AnnotationInteractionMode.Author;
+        }
+
+        /// <summary>
+        /// Changes the annotation interaction mode to the "Annotation eraser" mode.
+        /// </summary>
+        private void annotationInteractionModeAnnotationEraserMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            annotationViewer1.AnnotationInteractionMode = AnnotationInteractionMode.AnnotationEraser;
+        }
+
+        /// <summary>
+        /// Changes the annotation interaction mode to the "Pencil eraser" mode.
+        /// </summary>
+        private void annotationInteractionModePencilEraserMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            annotationViewer1.AnnotationInteractionMode = AnnotationInteractionMode.PencilEraser;
         }
 
         #endregion
@@ -2419,6 +2435,8 @@ namespace WpfDocumentViewerDemo
             annotationInteractionModeNoneMenuItem.IsChecked = false;
             annotationInteractionModeViewMenuItem.IsChecked = false;
             annotationInteractionModeAuthorMenuItem.IsChecked = false;
+            annotationInteractionModeAnnotationEraserMenuItem.IsChecked = false;
+            annotationInteractionModePencilEraserMenuItem.IsChecked = false;
 
             AnnotationInteractionMode annotationInteractionMode = e.NewValue;
             switch (annotationInteractionMode)
@@ -2433,6 +2451,14 @@ namespace WpfDocumentViewerDemo
 
                 case AnnotationInteractionMode.Author:
                     annotationInteractionModeAuthorMenuItem.IsChecked = true;
+                    break;
+
+                case AnnotationInteractionMode.AnnotationEraser:
+                    annotationInteractionModeAnnotationEraserMenuItem.IsChecked = true;
+                    break;
+
+                case AnnotationInteractionMode.PencilEraser:
+                    annotationInteractionModeAnnotationEraserMenuItem.IsChecked = true;
                     break;
             }
 
