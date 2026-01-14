@@ -1,4 +1,4 @@
-# VintaSoft WPF Document Viewer Demo
+﻿# VintaSoft WPF Document Viewer Demo
 
 This C# project uses <a href="https://www.vintasoft.com/vsimaging-dotnet-index.html">VintaSoft Imaging .NET SDK</a> and demonstrates how to view and annotate images and documents in WPF:
 * Load documents (DOC, DOCX, XLSX, XLS, PDF) and images (BMP, CUR, EMF, GIF, ICO, JBIG2, JPEG, JPEG2000, JPEG-LS, PCX, PNG, TIFF, BigTIFF, WMF, RAW) from file.
@@ -25,9 +25,9 @@ This C# project uses <a href="https://www.vintasoft.com/vsimaging-dotnet-index.h
    Vintasoft.Imaging.ImagingGlobalSettings.Register("REG_USER", "REG_EMAIL", "EXPIRATION_DATE", "REG_CODE");
    ```
 
-3. Build the project ("WpfDocumentViewerDemo.Net8.csproj" file) in Visual Studio or using .NET CLI:
+3. Build the project ("WpfDocumentViewerDemo.Net10.csproj" file) in Visual Studio or using .NET CLI:
    ```
-   dotnet build WpfDocumentViewerDemo.Net8.csproj
+   dotnet build WpfDocumentViewerDemo.Net10.csproj
    ```
 
 4. Run compiled application and try to view and annotate images and documents.
