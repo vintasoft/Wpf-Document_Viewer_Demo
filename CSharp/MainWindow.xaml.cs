@@ -29,12 +29,12 @@ using Vintasoft.Imaging.Wpf.UI;
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 using Vintasoft.Imaging.Wpf.UI.VisualTools.UserInteraction;
 
-using WpfDemosCommonCode;
-using WpfDemosCommonCode.Annotation;
-using WpfDemosCommonCode.Imaging;
-using WpfDemosCommonCode.Imaging.Codecs;
-using WpfDemosCommonCode.Office;
-using WpfDemosCommonCode.Twain;
+using WpfCommonCode;
+using WpfCommonCode.Annotation;
+using WpfCommonCode.Imaging;
+using WpfCommonCode.Imaging.Codecs;
+using WpfCommonCode.Office;
+using WpfCommonCode.Twain;
 
 using Vintasoft.Imaging.Annotation.Comments;
 using Vintasoft.Imaging.Annotation.Wpf.UI.Comments;
@@ -43,7 +43,7 @@ using Vintasoft.Imaging.Office.OpenXml.Wpf.UI.VisualTools.UserInteraction;
 #endif
 
 #if !REMOVE_PDF_PLUGIN
-using WpfDemosCommonCode.Pdf;
+using WpfCommonCode.Pdf;
 #endif
 
 namespace WpfDocumentViewerDemo
@@ -465,7 +465,7 @@ namespace WpfDocumentViewerDemo
             base.OnContentRendered(e);
 
 #if !REMOVE_OFFICE_PLUGIN
-            WpfDemosCommonCode.Office.OfficeDocumentVisualEditorWindow documentVisualEditorForm = new WpfDemosCommonCode.Office.OfficeDocumentVisualEditorWindow();
+            WpfCommonCode.Office.OfficeDocumentVisualEditorWindow documentVisualEditorForm = new WpfCommonCode.Office.OfficeDocumentVisualEditorWindow();
             documentVisualEditorForm.Owner = this;
             documentVisualEditorForm.AddVisualTool(annotationViewer1.AnnotationVisualTool);
 #endif

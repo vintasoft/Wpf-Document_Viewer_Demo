@@ -7,7 +7,7 @@ using Vintasoft.Imaging.Metadata;
 using Vintasoft.Imaging.Wpf.UI;
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Represents an executor of "Launch" actions that launches other applications.

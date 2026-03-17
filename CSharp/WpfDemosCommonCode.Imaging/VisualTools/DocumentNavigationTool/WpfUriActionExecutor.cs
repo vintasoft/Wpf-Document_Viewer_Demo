@@ -7,7 +7,7 @@ using Vintasoft.Imaging.Metadata;
 using Vintasoft.Imaging.Wpf.UI;
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Represents an executor of "URI" actions that opens URL using the default internet browser.
