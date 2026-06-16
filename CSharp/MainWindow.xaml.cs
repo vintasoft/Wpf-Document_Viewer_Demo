@@ -232,20 +232,19 @@ namespace WpfDocumentViewerDemo
 
         #region Constructors
 
-
-        public MainWindow()
+        /// <summary>
+        /// Initializes the <see cref="MainWindow"/> class.
+        /// </summary>
+        static MainWindow()
         {
-            // register the evaluation license for VintaSoft Imaging .NET SDK
-            Vintasoft.Imaging.ImagingGlobalSettings.Register("REG_USER", "REG_EMAIL", "EXPIRATION_DATE", "REG_CODE");
-
-            InitializeComponent();
-
             Jbig2AssemblyLoader.Load();
             Jpeg2000AssemblyLoader.Load();
             PdfAnnotationsAssemblyLoader.Load();
             DocxAssemblyLoader.Load();
             RawAssemblyLoader.Load();
             DicomAssemblyLoader.Load();
+            WsiCodecAssemblyLoader.Load();
+            CadCodecAssemblyLoader.Load();
 
             ImagingTypeEditorRegistrator.Register();
             AnnotationTypeEditorRegistrator.Register();
@@ -254,6 +253,21 @@ namespace WpfDocumentViewerDemo
             AnnotationOfficeWpfUIAssembly.Init();
 #endif
 
+            // set CustomFontProgramsController for all opened documents
+            CustomFontProgramsController.SetDefaultFontProgramsController();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
+        public MainWindow()
+        {
+            // register the evaluation license for VintaSoft Imaging .NET SDK
+            Vintasoft.Imaging.ImagingGlobalSettings.Register("REG_USER", "REG_EMAIL", "EXPIRATION_DATE", "REG_CODE");
+
+            InitializeComponent();
+
+           
             InitAddAnnotationMenuItems();
 
             InitImageDisplayMode();
@@ -358,9 +372,6 @@ namespace WpfDocumentViewerDemo
             annotationViewer1.InputGestureDelete = null;
 
             InitCustomAnnotations();
-
-            // set CustomFontProgramsController for all opened PDF documents
-            CustomFontProgramsController.SetDefaultFontProgramsController();
 
             moveAnnotationsBetweenImagesMenuItem.IsChecked = annotationViewer1.CanMoveAnnotationsBetweenImages;
 

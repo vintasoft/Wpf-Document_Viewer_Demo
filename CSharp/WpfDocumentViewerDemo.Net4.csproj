@@ -90,30 +90,31 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <PackageReference Include="Vintasoft.Imaging" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Gdi" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Office" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Office.Wpf.UI" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Pdf" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Pdf.UI" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.UI" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Wpf.UI" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Dicom" Version="8.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.DocCleanup" Version="10.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Jbig2Codec" Version="12.0.14.1" />
+    <PackageReference Include="Vintasoft.Imaging" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.CadCodec" Version="15.1.0.1" />    <PackageReference Include="Vintasoft.Imaging.Gdi" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Office" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Office.Wpf.UI" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Pdf" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Pdf.UI" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.UI" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Wpf.UI" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Dicom" Version="8.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.DocCleanup" Version="10.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Jbig2Codec" Version="12.1.0.1" />
     <PackageReference Include="Vintasoft.Imaging.Jpeg2000Codec" Version="10.1.0.1" />
-    <PackageReference Include="Vintasoft.Imaging.Office.OpenXml" Version="7.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Office.OpenXml.UI" Version="7.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Office.OpenXml.Wpf.UI" Version="7.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Pdf" Version="12.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Pdf.JavaScript" Version="12.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Pdf.Mrc" Version="12.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Pdf.UI" Version="12.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.RawCodec" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.UI" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Wpf" Version="15.0.14.1" />
-    <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="15.0.14.1" />
+    <PackageReference Include="Vintasoft.Imaging.Office.OpenXml" Version="7.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Office.OpenXml.UI" Version="7.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Office.OpenXml.Wpf.UI" Version="7.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Pdf" Version="12.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Pdf.JavaScript" Version="12.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Pdf.Mrc" Version="12.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Pdf.UI" Version="12.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.RawCodec" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.UI" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Wpf" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="15.1.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.WsiCodec" Version="15.1.0.1" />
     <PackageReference Include="Vintasoft.Shared" Version="4.6.1.1" />
     <PackageReference Include="Vintasoft.WpfTwain" Version="15.3.7.1" />
     <Reference Include="WindowsBase" />
@@ -191,6 +192,8 @@
     <Compile Include="WpfDemosCommonCode.Imaging\ActionProgressWindow.xaml.cs">
       <DependentUpon>ActionProgressWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WpfDemosCommonCode.Imaging\AssembliesLoader\CadCodecAssemblyLoader.cs">
+    </Compile>
     <Compile Include="WpfDemosCommonCode.Imaging\AssembliesLoader\DicomAssemblyLoader.cs">
     </Compile>
     <Compile Include="WpfDemosCommonCode.Imaging\AssembliesLoader\DocxAssemblyLoader.cs">
@@ -201,7 +204,13 @@
     </Compile>
     <Compile Include="WpfDemosCommonCode.Imaging\AssembliesLoader\PdfAnnotationsAssemblyLoader.cs">
     </Compile>
+    <Compile Include="WpfDemosCommonCode.Imaging\AssembliesLoader\PdfAssemblyLoader.cs">
+    </Compile>
     <Compile Include="WpfDemosCommonCode.Imaging\AssembliesLoader\RawAssemblyLoader.cs">
+    </Compile>
+    <Compile Include="WpfDemosCommonCode.Imaging\AssembliesLoader\WebpCodecAssemblyLoader.cs">
+    </Compile>
+    <Compile Include="WpfDemosCommonCode.Imaging\AssembliesLoader\WsiCodecAssemblyLoader.cs">
     </Compile>
     <Compile Include="WpfDemosCommonCode.Imaging\Codecs\ImagingEncoderFactory\Dialogs\BmpEncoderSettingsWindow.xaml.cs">
       <DependentUpon>BmpEncoderSettingsWindow.xaml</DependentUpon>
