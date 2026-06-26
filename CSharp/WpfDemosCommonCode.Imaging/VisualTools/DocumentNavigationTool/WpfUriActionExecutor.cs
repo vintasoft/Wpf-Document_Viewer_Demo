@@ -16,7 +16,7 @@ namespace WpfCommonCode.Imaging
     {
 
         /// <summary>
-        /// Executes the action.
+        /// Executes the action in image viewer.
         /// </summary>
         /// <param name="viewer">Image viewer.</param>
         /// <param name="image">Instance of <see cref="VintasoftImage"/> on wich action will be executed.</param>
