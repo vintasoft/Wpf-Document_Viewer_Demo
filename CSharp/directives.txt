@@ -7,3 +7,4 @@ The project contains the following compiler directives:
 6. REMOVE_RAW_PLUGIN - allows to disable code, which references to VintaSoft RAW Codec
 7. REMOVE_DICOM_PLUGIN - allows to disable code, which references to VintaSoft DICOM .NET Plug-in
 8. REMOVE_TWAIN_SDK -  allows to disable code, which references to VintaSoft Twain SDK
+9. REMOVE_EMAIL_CODEC - allows to disable code, which references to Vintasoft.Imaging.EmailCodec.dll

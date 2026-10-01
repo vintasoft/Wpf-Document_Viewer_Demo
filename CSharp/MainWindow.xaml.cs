@@ -216,16 +216,6 @@ namespace WpfDocumentViewerDemo
         /// </summary>
         Point _contextMenuPosition;
 
-        /// <summary>
-        /// Manages the layout settings of DOCX document image collections.
-        /// </summary>
-        ImageCollectionDocxLayoutSettingsManager _imageCollectionDocxLayoutSettingsManager;
-
-        /// <summary>
-        /// Manages the layout settings of XLSX document image collections.
-        /// </summary>
-        ImageCollectionXlsxLayoutSettingsManager _imageCollectionXlsxLayoutSettingsManager;
-
         #endregion
 
 
@@ -245,6 +235,7 @@ namespace WpfDocumentViewerDemo
             DicomAssemblyLoader.Load();
             WsiCodecAssemblyLoader.Load();
             CadCodecAssemblyLoader.Load();
+            EmailCodecAssemblyLoader.Load();
 
             ImagingTypeEditorRegistrator.Register();
             AnnotationTypeEditorRegistrator.Register();
@@ -382,17 +373,16 @@ namespace WpfDocumentViewerDemo
             // init visual tools
             InitVisualToolsToolBar();
 
-#if !REMOVE_OFFICE_PLUGIN
-            // specify that image collection of annotation viewer must handle layout settings requests
-            _imageCollectionDocxLayoutSettingsManager = new ImageCollectionDocxLayoutSettingsManager(annotationViewer1.Images);
-            _imageCollectionXlsxLayoutSettingsManager = new ImageCollectionXlsxLayoutSettingsManager(annotationViewer1.Images);
-#endif
-
 #if REMOVE_OFFICE_PLUGIN
             documentLayoutSettingsMenuItem.Visibility = Visibility.Collapsed;
 #endif
 
             DocumentPasswordWindow.EnableAuthentication(annotationViewer1);
+
+            // specify that SDK can download external resources when loading a document
+            ImagingEnvironment.ExternalResourceManager.AllowAccessToExternalResources = true;
+            // subscribe to the ExternalResourceManager.CreatingResourceStream event
+            ImagingEnvironment.ExternalResourceManager.CreatingResourceStream += ExternalResourceManager_CreatingResourceStream;
         }
 
         #endregion
@@ -760,6 +750,27 @@ namespace WpfDocumentViewerDemo
         #region UI state
 
         /// <summary>
+        /// Handles the CreatingResourceStream event of the ExternalResourceManager.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ExternalResourceStreamEventArgs"/> instance containing the event data.</param>
+        private void ExternalResourceManager_CreatingResourceStream(object sender, ExternalResourceStreamEventArgs e)
+        {
+            if (!e.Uri.IsFile)
+                Dispatcher.Invoke(new ParameterizedThreadStart(SetStatus), string.Format("Downloading file '{0}'...", e.Uri));
+        }
+
+        /// <summary>
+        /// Sets the status.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        private void SetStatus(object text)
+        {
+            imageInfoStatusLabel.Text = text.ToString();
+        }
+
+
+        /// <summary>
         /// Updates the user interface of this window.
         /// </summary>
         private void UpdateUI()
@@ -956,6 +967,17 @@ namespace WpfDocumentViewerDemo
             openImageMenuItem_Click(sender, null);
         }
 
+
+        /// <summary>
+        /// Adds image(s) to an image collection of annotation viewer with preview.
+        /// </summary>
+        private void addImagesWithPrviewMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ImagePreviewWindow dlg = new ImagePreviewWindow();
+            dlg.DestImagesManager = _imagesManager;
+            dlg.ShowDialog();
+        }
+
         /// <summary>
         /// Adds image(s) to an image collection of annotation viewer.
         /// </summary>
@@ -989,7 +1011,10 @@ namespace WpfDocumentViewerDemo
         /// </summary>
         private void docxLayoutSettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            _imageCollectionDocxLayoutSettingsManager.EditLayoutSettingsUseDialog(this);
+#if !REMOVE_OFFICE_PLUGIN
+            DocumentLayoutSettingsDialog dialog = new DocxLayoutSettingsDialog(annotationViewer1.Images);
+            dialog.ShowDialog();
+#endif
         }
 
         /// <summary>
@@ -997,8 +1022,32 @@ namespace WpfDocumentViewerDemo
         /// </summary>
         private void xlsxLayoutSettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            _imageCollectionXlsxLayoutSettingsManager.EditLayoutSettingsUseDialog(this);
+#if !REMOVE_OFFICE_PLUGIN
+            DocumentLayoutSettingsDialog dialog = new XlsxLayoutSettingsDialog(annotationViewer1.Images);
+            dialog.ShowDialog();
+#endif
         }
+
+        /// <summary>
+        /// Handles the Click event of htmlLayoutSettingsMenuItem object.
+        /// </summary>
+        private void htmlLayoutSettingsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            DocumentLayoutSettingsDialog dialog = new HtmlLayoutSettingsDialog(annotationViewer1.Images);
+            dialog.ShowDialog();
+        }
+
+        /// <summary>
+        /// Handles the Click event of emailLayoutSettingsMenuItem object.
+        /// </summary>
+        private void emailLayoutSettingsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+#if !REMOVE_EMAIL_CODEC
+            DocumentLayoutSettingsDialog dialog = new EmailLayoutSettingsDialog(annotationViewer1.Images);
+            dialog.ShowDialog();
+#endif
+        }
+
 
         /// <summary>
         /// Saves image collection with annotations of image viewer to new source and
@@ -2039,7 +2088,7 @@ namespace WpfDocumentViewerDemo
         /// Shows the About dialog.
         /// </summary>
         private void aboutMenuItem_Click(object sender, RoutedEventArgs e)
-        {
+        {          
             StringBuilder description = new StringBuilder();
 
             description.AppendLine("This project demonstrates the following SDK capabilities: ");
@@ -3521,6 +3570,11 @@ namespace WpfDocumentViewerDemo
                     actionLabel.Content = string.Format("Open URL: '{0}'", ((UriActionMetadata)action).Uri);
                     actionLabel.Visibility = Visibility.Visible;
                 }
+                else if(action is ResourceActionMetadata)
+                {
+                    actionLabel.Content = string.Format("Embedded resource: '{0}'", ((ResourceActionMetadata)action).ResourceUri);
+                    actionLabel.Visibility = Visibility.Visible;
+                }                
                 else if (action is LaunchActionMetadata)
                 {
                     actionLabel.Content = string.Format("Launch Application: '{0}'", ((LaunchActionMetadata)action).CommandLine);

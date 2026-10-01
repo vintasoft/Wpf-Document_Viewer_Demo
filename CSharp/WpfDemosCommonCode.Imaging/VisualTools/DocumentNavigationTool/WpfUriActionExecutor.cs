@@ -25,20 +25,51 @@ namespace WpfCommonCode.Imaging
         public bool ExecuteAction(WpfImageViewer viewer, VintasoftImage image, PageContentActionMetadata action)
         {
             UriActionMetadata uriAction = action as UriActionMetadata;
-            if (uriAction != null)
+            if (uriAction != null && uriAction.Uri != null)
             {
-                if (uriAction.Uri != null)
+                Uri actionUri = UriActionMetadata.GetAbsoluteUri(uriAction.Uri, image);
+                if (MessageBox.Show(string.Format("Open URL '{0}' ?", actionUri), "Open URL", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    if (MessageBox.Show(string.Format("Open URL '{0}' ?", uriAction.Uri), "Open URL", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    try
+                    {
+                        DemosTools.OpenBrowser(actionUri.ToString());
+                    }
+                    catch (Exception exc)
+                    {
+                        DemosTools.ShowErrorMessage(exc);
+                        return false;
+                    }
+                }
+                return true;
+            }
+            ResourceActionMetadata resourceAction = action as ResourceActionMetadata;
+            if (resourceAction != null && resourceAction.ResourceUri != null)
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.FileName = resourceAction.ResourceUri.ToString();
+                saveFileDialog.Title = "Save resource";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        resourceAction.SaveResourceToFile(saveFileDialog.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        DemosTools.ShowErrorMessage(ex);
+                        return true;
+                    }
+                    if (MessageBox.Show(string.Format("Open file '{0}' use default application?", saveFileDialog.FileName), "Open file", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
                         try
                         {
-                            DemosTools.OpenBrowser(uriAction.Uri.ToString());
+                            ProcessStartInfo processInfo = new ProcessStartInfo(saveFileDialog.FileName);
+                            processInfo.UseShellExecute = true;
+                            Process.Start(processInfo);
                         }
                         catch (Exception exc)
                         {
                             DemosTools.ShowErrorMessage(exc);
-                            return false;
                         }
                     }
                     return true;
